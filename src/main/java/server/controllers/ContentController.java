@@ -13,30 +13,7 @@ public class ContentController {
 
     public ContentController() {
 
-
     }
-
-    /**
-     * Event parameters:
-     * @param id
-     * @param title
-     * @param created
-     * @param owner
-     * @param startDate
-     * @param endDate
-     * @param description
-     */
-
-    /**
-     * Post parameters:
-     * @param id
-     * @param created
-     * @param owner
-     * @param content
-     * @param event
-     * @param parent
-     */
-
 
     /**
      * This method is needed to validate the time issues.
@@ -65,7 +42,7 @@ public class ContentController {
             System.out.println("The choosen date can not be after end date");
             throw new IllegalArgumentException("End date can not be before start date");
 
-        }else if (title.length() == 0 ){
+        } else if (title.length() == 0) {
             System.out.println("Title can not be empty");
             throw new IllegalArgumentException("Title can not be empty");
         }
@@ -77,7 +54,7 @@ public class ContentController {
      * This method is needed to validate the post issues.
      */
     public Post validatePostCreation(int id, Timestamp created, User owner, String content, Event event, Post parent)
-            throws IllegalArgumentException{
+            throws IllegalArgumentException {
         /**
          * An object is created, which is need to validate the different parameters.
          */
@@ -85,7 +62,7 @@ public class ContentController {
         /**
          * The if method does not make it possible to create a post, if the content is empty.
          */
-        if (content.length() == 0 ){
+        if (content.length() == 0) {
             System.out.println("Post can not be empty");
             throw new IllegalArgumentException("Content can not be empty");
         }
@@ -93,7 +70,6 @@ public class ContentController {
         return validatePost;
 
     }
-
 
 
 }

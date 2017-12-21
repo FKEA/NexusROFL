@@ -25,6 +25,8 @@ public final class Config {
 
     private static String JWT_SECRET;
 
+    private static boolean SECURE_ENDPOINTS;
+
     public Config() throws IOException {
 
         JsonObject jsonConfig = new JsonObject();
@@ -55,6 +57,8 @@ public final class Config {
 
         JWT_SECRET = jsonConfig.get("JWT_SECRET").getAsString();
 
+        SECURE_ENDPOINTS = jsonConfig.get("SECURE_ENDPOINTS").getAsBoolean();
+
         reader.close();
         input.close();
 
@@ -81,4 +85,6 @@ public final class Config {
     }
 
     public static String getJwtSecret() { return JWT_SECRET; }
+
+    public static boolean getSecureEndpoints() { return SECURE_ENDPOINTS; }
 }

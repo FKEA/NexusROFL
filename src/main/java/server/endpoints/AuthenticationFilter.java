@@ -47,21 +47,26 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 
     @Override
     public void filter(ContainerRequestContext containerRequestContext) throws IOException {
-        String authorizationHeader = containerRequestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
-        localContainerRequestContext = containerRequestContext;
-        token = authorizationHeader.substring(AUTHENTICATION_SCHEME.length()).trim();
 
-        httpMethodType = containerRequestContext.getMethod().toString();
+        if (Config.getSecureEndpoints()) {
 
-        try {
-            if (validateToken(token) == true) {
+            String authorizationHeader = containerRequestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
+            localContainerRequestContext = containerRequestContext;
+            token = authorizationHeader.substring(AUTHENTICATION_SCHEME.length()).trim();
 
-            } else {
-                containerRequestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
+            httpMethodType = containerRequestContext.getMethod().toString();
+
+            try {
+                if (validateToken(token) == true) {
+
+                } else {
+                    containerRequestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
-        } catch (Exception e) {
-            e.printStackTrace();
         }
 
     }

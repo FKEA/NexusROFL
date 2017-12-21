@@ -22,6 +22,6 @@ public class ServletContext implements ServletContextListener {
 
     @Override
     public void contextDestroyed(ServletContextEvent servletContextEvent) {
-        DBManager.closeConnection();
+
     }
 }

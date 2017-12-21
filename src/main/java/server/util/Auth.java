@@ -23,15 +23,16 @@ public class Auth {
 
     /**
      * @param password The password that should be hashed
-     * @param salt The user specific salt
+     * @param salt     The user specific salt
      * @return A SHA-256 hashed value of the password and salt combination
      */
-    public static String hashPassword(String password, String salt) { return (performHashing(password + salt));
+    public static String hashPassword(String password, String salt) {
+        return (performHashing(password + salt));
     }
 
     /**
      * Salt generation algorithm, generates a randomized 6 character salt
-     *      based on the seed string.
+     * based on the seed string.
      *
      * @param seed The string that will be used as the seed for the salt
      * @return A 6 character salt
@@ -42,24 +43,25 @@ public class Auth {
         String hashedString = performHashing(seed);
 
         // Generate a random number between 1-56, that will be the starting index of the seed.
-        int startIndex = (int) (56*Math.random());
+        int startIndex = (int) (56 * Math.random());
 
         // Return a 6 char substring of the hashed seed string,
         // starting at the index defined by the random number.
-        return hashedString.substring(startIndex, startIndex+6);
+        return hashedString.substring(startIndex, startIndex + 6);
 
     }
 
     /**
      * Code taken from:
      * https://github.com/Distribuerede-Systemer-2017/
-     *          secure-dis/blob/master/src/Utility/Digester.java
-     *
+     * secure-dis/blob/master/src/Utility/Digester.java
+     * <p>
      * Performing SHA-256 hashing of string
+     *
      * @param str The string that will be hashed
      * @return SHA-256 hash of the inputted string
      */
-    private static String performHashing(String str){
+    private static String performHashing(String str) {
         digester.update(str.getBytes());
         byte[] hash = digester.digest();
         StringBuilder hexString = new StringBuilder();

@@ -57,19 +57,21 @@ public class User {
     */
 
     // Use this constructor when assembling data for new user creation
-       public User(String password, String firstName, String lastName, String email, String description, char gender, String major, int semester){
+       public User(String password, String firstName, String lastName, String email, String description, String gender, String major, int semester){
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.description = description;
-        this.gender = gender;
+        this.gender = gender.charAt(0);
         this.major = major;
         this.semester = semester;
 
         this.events = new ArrayList<Event>();
         this.posts = new ArrayList<Post>();
     }
+
+
 
 
     // Use this constructor when getting users from the database -> Does not contain password and salt

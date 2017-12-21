@@ -19,9 +19,10 @@ import java.sql.SQLException;
 
 /**
  * Created by Marc & Mikkel on 17-10-2017.
- *
+ * <p>
  * This is our user endpoint, which handles the input given from the client regarding user-creation.
  */
+
 @Path("/users")
 public class UserEndpoint {
 
@@ -37,6 +38,7 @@ public class UserEndpoint {
 
     Return response converts the ArrayList "allUsers" from GSON to JSON
      */
+    @Secured
     @GET
     public Response getAllUsers() {
 
@@ -65,7 +67,7 @@ public class UserEndpoint {
      * @param user_id
      * @return The method returns a response that converts the "user" from GSON to JSON.
      */
-
+    @Secured
     @GET
     @Path("{id}")
     public Response getUser(@PathParam("id") int user_id) {
@@ -111,11 +113,7 @@ public class UserEndpoint {
         try {
             createdUser = new Gson().fromJson(jsonUser, User.class);
         } catch (IllegalArgumentException e) {
-
-            log.writeLog("DB", this.getClass(), ("An IllegalArguement exception occurred while running createUser - " +
-                    "User active was: " + AuthenticationFilter.userEmailByToken + "\n"), 1);
-
-            System.out.print(e.getMessage());
+            System.out.print("i failed creating the user");
             return Response.status(400).build();
         }
 
@@ -129,11 +127,8 @@ public class UserEndpoint {
                     createdUser.getLastName(), createdUser.getEmail(), createdUser.getGender(),
                     createdUser.getDescription(), createdUser.getMajor(), createdUser.getSemester());
         } catch (IllegalArgumentException exception) {
-
-            log.writeLog("DB", this.getClass(), ("An IllegalArguement exception occurred while running createUser"
-                    + "User active was: " + AuthenticationFilter.userEmailByToken + "\n"), 1);
-
-            System.out.println(exception.getMessage());
+            System.out.print("i failed in the controller");
+            exception.printStackTrace();
             return Response.status(400).build();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -156,34 +151,6 @@ public class UserEndpoint {
 
         return Response.status(201).type("text/plain").entity("User Created").build();
 
-    }
-
-    //     public void SetTemporaryEmailByToken (String emailInToken){
-    //         this.userEmail = emailInToken;
-
-
-    @DELETE
-    @Path("{id}")
-    public Response deleteUser(String jsonDeleteId) {
-        User userToDelete;
-
-        try {
-
-            userToDelete = new Gson().fromJson(jsonDeleteId, User.class);
-            userProvider.getAllUsers();
-        } catch (Exception e) {
-            e.printStackTrace();
-
-            log.writeLog("DB",this.getClass(),("An SQL exception occurred while running deleteUser - " +
-                    "User active was: " + AuthenticationFilter.userEmailByToken),1);
-
-            return Response.status(400).build();
-        }
-
-        log.writeLog(this.getClass().getName(),this.getClass(),("deleteUser was successful - " +
-                "User active was: " + AuthenticationFilter.userEmailByToken),0);
-
-        return Response.status(200).type("text/plain").entity("User was deleted").build();
     }
 }
 
